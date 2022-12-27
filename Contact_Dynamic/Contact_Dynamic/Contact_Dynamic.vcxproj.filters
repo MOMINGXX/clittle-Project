@@ -18,5 +18,13 @@
     <ClCompile Include="FileName.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Contact\Contact\Contact.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Contact\Contact\Contact.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
