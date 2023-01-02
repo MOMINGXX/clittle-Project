@@ -69,7 +69,7 @@ int main()
 			break;
 		case Exit:
 			printf("ÍË³ö\n");
-			Destory_Contact(&Con);
+			Contact_Destory(&Con);
 			break;
 		default:
 			printf("Ñ¡Ôñ´íÎó\n");
