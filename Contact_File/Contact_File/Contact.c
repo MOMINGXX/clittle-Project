@@ -29,7 +29,7 @@ void Contact_Load(Contact_Init* ps)
 	FILE* PfRead = fopen("Contact.dat", "r");
 	if (PfRead == NULL)
 	{
-		perror("Contact_Load:\n");
+		perror("Contact_Load");
 		return;
 	}
 
