@@ -5,19 +5,19 @@
 static void Contact_Capacity_Check(Contact_Init* ps);
 
 /****
-	*@brief		ͨѶ¼�˵�
-	*@param		��
-	*@retval	��
+	*@brief		通讯录菜单
+	*@param		无
+	*@retval	无
 *****/
 void Contact_Menu()
 {
 	printf("\n");
 	printf("/******************************************/\n");
 	printf("\n");
-	printf("***   1.Add(����)	2.Del(ɾ��)    ***\n");
-	printf("***   3.Search(����)	4.Modify(�޸�) ***\n");
-	printf("***   5.Show(��ʾ)	6.Sort(����)   ***\n");
-	printf("***   7.Save(����)	0.Exit(�˳�)   ***\n");
+	printf("***   1.Add(增加)	2.Del(删除)    ***\n");
+	printf("***   3.Search(查找)	4.Modify(修改) ***\n");
+	printf("***   5.Show(显示)	6.Sort(排序)   ***\n");
+	printf("***   7.Save(保存)	0.Exit(退出)   ***\n");
 	printf("\n");
 	printf("/******************************************/\n");
 	printf("\n");
@@ -44,29 +44,29 @@ void Contact_Load(Contact_Init* ps)
 }
 
 /****
-	*@brief		ͨѶ¼��ʼ��
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		通讯录初始化
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Init_Contact(Contact_Init* ps)
 {
 	ps->DATA = (PeoInfo_Init*)malloc(CAPACITY_INIT * sizeof(PeoInfo_Init));
 	if (ps->DATA == NULL)
 	{
-		perror("Init_Contact:\n");
+		perror("Init_Contact");
 		return;
 	}
 	ps->size = 0;
 	ps->Capacity = CAPACITY_INIT;
 
-	//���ļ���ŵ���ϵ�˼���ͨѶ¼��
+	//把文件存放的联系人加载通讯录中
 	Contact_Load(ps);
 }
 
 /****
-	*@brief		ͨѶ¼�������
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		通讯录容量检查
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 static void Contact_Capacity_Check(Contact_Init* ps)
 {
@@ -78,22 +78,22 @@ static void Contact_Capacity_Check(Contact_Init* ps)
 		{
 			ps->DATA = ptr;
 			ps->Capacity += INCREMENT;
-			printf("���ݳɹ�!\n");
+			printf("扩容成功!\n");
 		}
 		else
 		{
-			perror("Contact_Capacity_Check:\n");
-			printf("����ʧ��!\n");
+			perror("Contact_Capacity_Check");
+			printf("扩容失败!\n");
 			return;
 		}
 	}
 }
 
 /****
-	*@brief		�ҵ���Ҫ���ҵ���ϵ���±�
-	*@param		ps	 ͨѶ¼��ַ
-	*@param		name Ҫ�����˵�����
-	*@retval	i/-1 δ�ҵ�����-1  ���ҵ��������±�
+	*@brief		找到需要查找的联系人下标
+	*@param		ps	 通讯录地址
+	*@param		name 要查找人的姓名
+	*@retval	i/-1 未找到返回-1  ，找到返回其下标
 *****/
 static int Contact_Find(const Contact_Init* ps, char* name)
 {
@@ -109,48 +109,48 @@ static int Contact_Find(const Contact_Init* ps, char* name)
 }
 
 /****
-	*@brief		����ͨѶ¼����ϵ����Ϣ
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		增加通讯录中联系人信息
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Add(Contact_Init* ps)
 {
-	//���ͨѶ¼����
-	//1.�������� ����> ��������
-	//2.����û�� ����> ʲô������
+	//检查通讯录容量
+	//1.容量满了 ——> 增加容量
+	//2.容量没满 ——> 什么都不做
 	Contact_Capacity_Check(ps);
 
-	printf("��������ϵ������:>");
+	printf("请输入联系人姓名:>");
 	scanf("%s",ps->DATA[ps->size].name);
-	printf("��������ϵ������:>");
+	printf("请输入联系人年龄:>");
 	scanf("%d", &(ps->DATA[ps->size].age));
-	printf("��������ϵ���Ա�:>");
+	printf("请输入联系人性别:>");
 	scanf("%s", ps->DATA[ps->size].Sex);
-	printf("��������ϵ�˵绰:>");
+	printf("请输入联系人电话:>");
 	scanf("%s", ps->DATA[ps->size].Tele);
-	printf("��������ϵ�˵�ַ:>");
+	printf("请输入联系人地址:>");
 	scanf("%s", ps->DATA[ps->size].Addr);
 
 	ps->size++;
-	printf("��ϵ�����ӳɹ�!\n");
+	printf("联系人添加成功!\n");
 }
 
 /****
-	*@brief		ɾ��ͨѶ¼����ϵ����Ϣ
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		删除通讯录中联系人信息
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Del(Contact_Init* ps)
 {
 	int ret = 0;
 	int i = 0;
 	char name[NAME_MAX] = { 0 };
-	printf("������Ҫɾ������ϵ��:>");
+	printf("请输入要删除的联系人:>");
 	scanf("%s", name);
 	ret = Contact_Find(ps, name);
 	if (-1 == ret)
 	{
-		printf("����ϵ��δ�ҵ���\n");
+		printf("该联系人未找到！\n");
 	}
 	else
 	{
@@ -160,21 +160,21 @@ void Contact_Del(Contact_Init* ps)
 		}
 
 		ps->size--;
-		printf("ɾ���ɹ�!\n");
+		printf("删除成功!\n");
 	}
 }
 
 /****
-	*@brief		����ͨѶ¼����ϵ����Ϣ
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		查找通讯录中联系人信息
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Search(Contact_Init* ps)
 {
 	int ret = ps->size;
 	int i = 0;
 	char name[NAME_MAX] = { 0 };
-	printf("������Ҫ���ҵ���ϵ��:>");
+	printf("请输入要查找的联系人:>");
 	scanf("%s", name);
 	for(i=0;i<ps->size;i++)
 	{
@@ -191,48 +191,48 @@ void Contact_Search(Contact_Init* ps)
 	}
 	if (ret == ps->size)
 	{
-		printf("�Ҳ�������ϵ��!\n");
+		printf("找不到该联系人!\n");
 	}
 }
 
 /****
-	*@brief		�޸�ͨѶ¼��ָ����ϵ����Ϣ
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		修改通讯录中指定联系人信息
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Modify(Contact_Init* ps)
 {
 	int ret = 0;
 	int i = 0;
 	char name[NAME_MAX] = { 0 };
-	printf("������Ҫ�޸ĵ���ϵ��:>");
+	printf("请输入要修改的联系人:>");
 	scanf("%s", name);
 	ret = Contact_Find(ps, name);
 	if (-1 == ret)
 	{
-		printf("����ϵ��δ�ҵ���\n");
+		printf("该联系人未找到！\n");
 	}
 	else
 	{
-		printf("��������ϵ������:>");
+		printf("请输入联系人姓名:>");
 		scanf("%s", ps->DATA[ret].name);
-		printf("��������ϵ������:>");
+		printf("请输入联系人年龄:>");
 		scanf("%d", &(ps->DATA[ret].age));
-		printf("��������ϵ���Ա�:>");
+		printf("请输入联系人性别:>");
 		scanf("%s", ps->DATA[ret].Sex);
-		printf("��������ϵ�˵绰:>");
+		printf("请输入联系人电话:>");
 		scanf("%s", ps->DATA[ret].Tele);
-		printf("��������ϵ�˵�ַ:>");
+		printf("请输入联系人地址:>");
 		scanf("%s", ps->DATA[ret].Addr);
 
-		printf("��ϵ���޸ĳɹ�!\n");
+		printf("联系人修改成功!\n");
 	}
 }
 
 /****
-	*@brief		��ͨѶ¼����ϵ������
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		对通讯录中联系人排序
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Sort(Contact_Init* ps)
 {
@@ -240,9 +240,9 @@ void Contact_Sort(Contact_Init* ps)
 }
 
 /****
-	*@brief		����ͨѶ¼����ϵ����Ϣ
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		保存通讯录中联系人信息
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Save(Contact_Init* ps)
 {
@@ -260,20 +260,20 @@ void Contact_Save(Contact_Init* ps)
 	
 	fclose(PfFile);
 	PfFile = NULL;
-	printf("����ɹ�!\n");
+	printf("保存成功!\n");
 }
 
 /****
-	*@brief		��ʾͨѶ¼����Ϣ
-	*@param		ps  ͨѶ¼��ַ
-	*@retval	��
+	*@brief		显示通讯录中信息
+	*@param		ps  通讯录地址
+	*@retval	无
 *****/
 void Contact_Show(Contact_Init* ps)
 {
 	int i = 0;
 	if (ps->size == 0)
 	{
-		printf("ͨѶ¼����ʲô��û�У�\n");
+		printf("通讯录里面什么都没有！\n");
 	}
 	else
 	{
